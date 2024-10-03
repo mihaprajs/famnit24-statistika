@@ -2,7 +2,7 @@
   <img src="famnit.png" style="padding: 32px" />
 </p>
 
-# UP FAMNIT - Statistics - 2024/2025
+# UP FAMNIT - Statistika - 2024/2025
 
 Professor: doc. dr. Barbara Boldin 
 
@@ -10,7 +10,7 @@ Practice assistant: dr. Ana Zalokar
 
 ## Intro
 
-The repository serves as a personal archive of all code written during the course of Statistics (BF2) at UP FAMNIT. The code is written in R using VS Code and/or RStudio.
+The repository serves as a personal archive of all code written during the course of Statistika (BF2) at UP FAMNIT. The code is written in R using VS Code and/or RStudio.
 
 **!!! Code in this repository is a wild mix of genius and "oopsie doopsies" - it’s shared !!! after !!! submitting my assignments, so expect adventures (and bugs). Use or copy at your risk !!!**
 
