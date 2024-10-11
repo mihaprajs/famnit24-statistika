@@ -1,0 +1,203 @@
+---
+output:
+  pdf_document: 
+    keep_tex: true
+  html_document: default
+---
+<!-- R Commander Markdown Template -->
+
+Replace with Main Title
+=======================
+
+### mihap
+
+### `r as.character(Sys.Date())`
+
+```{r echo=FALSE}
+# include this code chunk as-is to set options
+knitr::opts_chunk$set(comment=NA, prompt=TRUE, out.width=750, fig.height=8, fig.width=8)
+library(Rcmdr)
+library(car)
+library(RcmdrMisc)
+```
+
+```{r}
+my.data <- 
+  read.table("C:/Users/mihap/Code/Faks/famnit24-statistika/practice/data.txt",
+   header=TRUE, stringsAsFactors=TRUE, sep="\t", na.strings="NA", dec=".", 
+  strip.white=TRUE)
+```
+
+
+### Summarize Data Set: my.data
+```{r}
+summary(my.data)
+```
+
+
+```{r}
+library(abind, pos=17)
+```
+
+
+```{r}
+library(e1071, pos=18)
+```
+
+
+
+### Numerical Summaries: my.data
+
+```{r}
+Dataset <- 
+  read.table("C:/Users/mihap/Code/Faks/famnit24-statistika/practice/data.txt",
+   header=TRUE, stringsAsFactors=TRUE, sep="\t", na.strings="NA", dec=".", 
+  strip.white=TRUE)
+```
+
+
+### Summarize Data Set: Dataset
+```{r}
+summary(Dataset)
+```
+
+
+
+### Histogram: Sport..hours.per.week.
+```{r}
+with(Dataset, Hist(Sport..hours.per.week., scale="frequency", 
+  breaks="Sturges", col="darkgray"))
+```
+
+
+### Histogram: Sport..hours.per.week.
+```{r}
+with(Dataset, Hist(Sport..hours.per.week., scale="frequency", 
+  breaks="Sturges", col="darkgray", xlab="Št. ur športa na teden", 
+  ylab="Frekvenca"))
+```
+
+
+### Histogram: Sport..hours.per.week.
+```{r}
+with(Dataset, Hist(Sport..hours.per.week., scale="frequency", 
+  breaks="Sturges", col="darkgray", xlab="Št. ur športa na teden", 
+  ylab="Frekvenca"))
+```
+
+```{r}
+with(Dataset, Hist(Sport..hours.per.week., scale="frequency",
+breaks="Sturges", col="darkgray", xlab="Št. ur športa na teden",
+ylab="Frekvenca"))
+```
+
+
+
+### Histogram: Sport..hours.per.week.
+```{r}
+with(Dataset, Hist(Sport..hours.per.week., groups=Smoking, 
+  scale="frequency", breaks="Sturges", col="darkgray", 
+  xlab="Št. ur športa na teden", ylab="Frekvenca"))
+```
+
+
+### Histogram: Weight
+```{r}
+with(Dataset, Hist(Weight, groups=Videogames, scale="frequency", 
+  breaks="Sturges", col="darkgray"))
+```
+
+
+### Bar Plot: Videogames
+```{r}
+with(Dataset, Barplot(Videogames, by=Sex, style="divided", 
+  legend.pos="above", xlab="Videogames", ylab="Frequency", label.bars=TRUE))
+```
+
+
+### Histogram: Weight
+```{r}
+with(Dataset, Hist(Weight, groups=Sex, scale="frequency", breaks="Sturges", 
+  col="darkgray"))
+```
+
+
+### Histogram: Friends.on.Facebook
+```{r}
+with(Dataset, Hist(Friends.on.Facebook, groups=Videogames, 
+  scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+
+### Bar Plot: Eye.Color
+```{r}
+with(Dataset, Barplot(Eye.Color, by=Sex, style="divided", 
+  legend.pos="above", xlab="Eye.Color", ylab="Frequency", label.bars=TRUE))
+```
+
+
+### Bar Plot: Eye.Color
+```{r}
+with(Dataset, Barplot(Eye.Color, xlab="Eye.Color", ylab="Frequency", 
+  label.bars=TRUE))
+```
+
+```{r}
+library(colorspace, pos=19)
+```
+
+
+
+### Pie Chart: Eye.Color
+```{r}
+with(Dataset, piechart(Eye.Color, xlab="", ylab="", main="Eye.Color", 
+  col=rainbow_hcl(5), scale="percent"))
+```
+
+
+### Pie Chart: Eye.Color
+```{r}
+with(Dataset, piechart(Eye.Color, xlab="", ylab="", main="Eye.Color", 
+  col=palette()[2:6], scale="percent"))
+```
+
+
+### Pie Chart: Eye.Color
+```{r}
+with(Dataset, piechart(Eye.Color, xlab="", ylab="", main="Eye.Color", 
+  col=palette()[2:6], scale="percent"))
+```
+
+
+### Bar Plot: Sex
+```{r}
+with(Dataset, Barplot(Sex, by=Faculty, style="divided", legend.pos="above", 
+  xlab="Sex", ylab="Frequency", label.bars=TRUE))
+```
+
+
+### Scatterplot: Height~Weight
+```{r}
+scatterplot(Height~Weight, regLine=FALSE, smooth=FALSE, boxplots=FALSE, 
+  data=Dataset)
+```
+
+
+### Scatterplot: Weight~Height
+```{r}
+scatterplot(Weight~Height, regLine=FALSE, smooth=FALSE, boxplots=FALSE, 
+  data=Dataset)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"Friends.on.Facebook", drop=FALSE], statistics=c("mean",
+   "sd", "IQR", "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Boxplot: ~ Friends.on.Facebook
+```{r}
+Boxplot( ~ Friends.on.Facebook, data=Dataset, id=list(method="y"))
+```
