@@ -1,7 +1,7 @@
 # Naloga 1
 
 tempconvert <- function(x) {
-  ((x-32)*(5/9))+273.15
+  newtemp <- ((x-32)*(5/9))+273.15
   return(newtemp)
 }
 
@@ -54,7 +54,7 @@ mean(povprecje2)
 
 # Naloga 3
   # a)
-poljscine<-read.csv("practice/poljscine.csv")
+poljscine<-read.delim("practice/poljscine.txt")
   #b)
 plot(poljscine$Pšenica.in.pira,type="b",xaxt="n",xlab="Leto",ylab="Površina v ha", main="Površina pridelave pšenice in pire")
 axis(1, at=seq(1, 33, 2),labels=seq(1991,2023,2))
