@@ -1,0 +1,72 @@
+---
+title: "Kviz2"
+author: "Miha Prajs"
+format: pdf
+editor: source
+---
+
+## Priprava podatkov
+```{r}
+my.data <- read.table("C:/Users/mihap/Code/Faks/famnit24-statistika/HW/Kviz2/data.txt", 
+                      header=TRUE, 
+                      stringsAsFactors=TRUE, sep="",
+                      na.strings="NA",
+                      dec=".",
+                      strip.white=TRUE)
+x <- 4
+z <- 6
+my.data <- my.data[unique(c(seq(x,
+                                nrow(my.data)
+                                ,by=10),
+                            seq(z,
+                                nrow(my.data)
+                                ,by=10))),]
+```
+
+## 1. naloga
+
+```{r}
+height_sample <- my.data$Height
+t.test(height_sample, mu = 170)
+```
+T-test pokaže, da je povprečna višina statistično značilno **različna** od 170 cm pri stopnji značilnosti α = 0,05. (p-vrednost < 0,05), zato zavrnemo ničelno hipotezo in uporabimo alternativno.
+
+## 2. naloga
+```{r}
+hist(height_sample, main = "Histogram višine", xlab = "Višina (cm)", breaks = 10)
+qqnorm(height_sample)
+qqline(height_sample)
+```
+Histogram in Q-Q graf kažeta, da so podatki **približno normalno porazdeljeni**, kar omogoča uporabo parametričnih testov.
+
+## 3. naloga
+```{r}
+n <- 30
+samples <- replicate(200, mean(rgeom(n, prob = 0.2)))
+hist(samples, main = "Histogram vzorčnega povprečja", xlab = "X̄n", breaks = 15)
+
+E_Xn <- mean(samples)
+Var_Xn <- var(samples)
+
+E_Xn
+Var_Xn
+```
+Po centralnem limitnem izreku ima histogram vzorčnega povprečja obliko normalne porazdelitve. 
+
+## 4. naloga
+```{r}
+set.seed(456)
+pre_treatment <- rnorm(50, mean = 150, sd = 15)
+post_treatment <- rnorm(50, mean = 140, sd = 15)
+
+t.test(pre_treatment, post_treatment, paired = TRUE, conf.level = 0.99)
+
+library(pwr)
+effect_size <- (mean(pre_treatment)-mean(post_treatment))/sd(c(pre_treatment,
+                                                               post_treatment))
+pwr.t.test(d = effect_size, n = 50, sig.level = 0.01, type = "paired")
+```
+Statistični test kaže, da je razlika med povprečnimi vrednostmi **statistično značilna** (p-vrednost < 0,01). Moč testa je zelo dobra (power > 0.97).
+
+
+
