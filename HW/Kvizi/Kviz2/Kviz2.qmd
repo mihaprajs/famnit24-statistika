@@ -7,7 +7,7 @@ editor: source
 
 ## Priprava podatkov
 ```{r}
-my.data <- read.table("C:/Users/mihap/Code/Faks/famnit24-statistika/HW/Kviz2/data.txt", 
+my.data <- read.table("/pot/do/datoteke", 
                       header=TRUE, 
                       stringsAsFactors=TRUE, sep="",
                       na.strings="NA",

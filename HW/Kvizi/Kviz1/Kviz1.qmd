@@ -2,14 +2,14 @@
 title: "Kviz 1"
 author: "Miha Prajs"
 format: pdf
-editor: visual
+editor: source
 ---
 
 ## Priprava podatkov
 
 ```{r}
 my.data <- 
-  read.table("C:/Users/mihap/Code/Faks/famnit24-statistika/HW/data.txt", 
+  read.table("/pot/do/datoteke", 
   header=TRUE, stringsAsFactors=TRUE, sep="", na.strings="NA", dec=".", 
   strip.white=TRUE)
 x <- 6
@@ -30,7 +30,7 @@ median(my.data$Books..how.many.per.year.,na.rm=T)
 IQR(my.data$Books..how.many.per.year.,na.rm=T)
 ```
 
-Histogram je desno asimetričen. Mediana je ustrezna mera središčnosti, saj prikaže srednjo vrednost med danimi podatki. Interkvartilni rezpon pa primerna mera variabilnosti, saj nam pove koliko  vzorcev predstavlja 50 % dane populacije.
+Histogram je desno asimetričen. Mediana je ustrezna mera središčnosti, saj prikaže srednjo vrednost med danimi podatki. Interkvartilni rezpon pa primerna mera variabilnosti, saj nam pove koliko vzorcev predstavlja 50 % dane populacije.
 
 ## 2. naloga
 
@@ -40,7 +40,7 @@ osamelci <- boxplot.stats(my.data$Sport..hours.per.week.)$out
 osamelci
 ```
 
-Iz grafa je razvidno, da je osamelcev več. Z uporabo funkcije boxplot.stats([data])$out ugotovimo koliko in kateri so, v našem primeru jih je 5 in so 14, 15, 15, 15 in 20.
+Iz grafa je razvidno, da je osamelcev več. Z uporabo funkcije boxplot.stats(\[data\])\$out ugotovimo koliko in kateri so, v našem primeru jih je 5 in so 14, 15, 15, 15 in 20.
 
 ## 3. naloga
 
