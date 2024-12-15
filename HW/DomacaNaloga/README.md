@@ -36,3 +36,7 @@ Datoteko \_language-sl.yaml lahko uporabiš za nastavitev slovenščine kot priv
   language: "./pot/do/direktorija/_language-sl.yaml"
   ---
 ```
+
+## Drugo
+
+Če kakšen prevod ustrezen, odpri *Issue* s celotno referenco iz _language-sl.yaml datoteke (npr. toc-title-document: "Kazalo vsebine") in ustreznim prevodom.
