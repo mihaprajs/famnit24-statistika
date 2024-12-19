@@ -9,7 +9,7 @@ editor: source
 
 ```{r}
 my.data <- 
-  read.table("/pot/do/datoteke", 
+  read.table("C:\Users\mihap\Code\Faks\famnit24-statistika\HW\Kvizi\Kviz1\podatki.csv", 
   header=TRUE, stringsAsFactors=TRUE, sep="", na.strings="NA", dec=".", 
   strip.white=TRUE)
 x <- 6
