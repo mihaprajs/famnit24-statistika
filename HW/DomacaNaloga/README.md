@@ -1,4 +1,4 @@
-# \_language-sl.yaml
+# \_language-sl.yml
 
 ## Uporaba
 
@@ -13,7 +13,7 @@ Datoteko \_language-sl.yaml lahko uporabiš za nastavitev slovenščine kot priv
 ```
   ---
   # Druge nastavitve (title, date,...)
-  language: "C:/pot/do/direktorija/_language-sl.yaml"
+  language: "C:/pot/do/direktorija/_language-sl.yml"
   ---
 ```
 
@@ -24,7 +24,7 @@ Datoteko \_language-sl.yaml lahko uporabiš za nastavitev slovenščine kot priv
 ```
   ---
   # Druge nastavitve (title, date,...)
-  language: "./_language-sl.yaml"
+  language: "./_language-sl.yml"
   ---
 ```
 
@@ -33,7 +33,7 @@ Datoteko \_language-sl.yaml lahko uporabiš za nastavitev slovenščine kot priv
 ```
   ---
   # Druge nastavitve (title, date,...)
-  language: "./pot/do/direktorija/_language-sl.yaml"
+  language: "./pot/do/direktorija/_language-sl.yml"
   ---
 ```
 
