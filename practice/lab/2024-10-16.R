@@ -54,7 +54,7 @@ mean(povprecje2)
 
 # Naloga 3
   # a)
-poljscine<-read.delim("practice/poljscine.txt")
+poljscine<-read.delim("practice/lab/poljscine.txt")
   #b)
 plot(poljscine$Pšenica.in.pira,type="b",xaxt="n",xlab="Leto",ylab="Površina v ha", main="Površina pridelave pšenice in pire")
 axis(1, at=seq(1, 33, 2),labels=seq(1991,2023,2))

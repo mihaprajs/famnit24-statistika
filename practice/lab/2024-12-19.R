@@ -1,7 +1,7 @@
 # Vaje 10
 
 ## Naloga 1
-data <- read.delim("practice/data.txt")
+data <- read.delim("practice/lab/data.txt")
 model1 <- lm(data$Weight~data$Height,data)
 summary(model1)
 
