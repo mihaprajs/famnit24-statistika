@@ -1,0 +1,139 @@
+---
+title: "Maščobne kisline v oljčnem olju"
+author: "Miha Prajs"
+date: last-modified
+date-format: D. M. YYYY
+format: 
+  html:
+    embed-resources: true
+    toc: true
+    code-fold: show
+execute: 
+  warning: false
+  error: true
+  echo: true
+language: "C:/Users/mihap/Code/Faks/famnit24-statistika/HW/DomacaNaloga/_language-sl.yml"
+---
+
+## Uvod
+
+### Priprava podatkov
+
+Podatki so obdelani in pripravljeni za analizo z upodabo knjižnice TidyVerse:
+
+```{r}
+library(tidyverse)
+library(pwr)
+library(BSDA)
+library(ggpubr)
+library(DT)
+
+data <- read.csv("C:/Users/mihap/Code/Faks/famnit24-statistika/HW/DomacaNaloga/olive.csv",sep=";")
+colnames(data)[c(5:12)] <- c("Palmitic","Palmitoleic","Stearic","Oleic","Linoleic","Linolenic","Arachidic","Eicosenoic")
+dataLong1 <- data |>
+  pivot_longer(cols=c(Palmitic,Palmitoleic,Stearic,Oleic,Linoleic,Linolenic,Arachidic,Eicosenoic),
+               names_to="mascobnaKislina",
+               values_to="koncentracija")
+dataLong2 <- data |>
+  pivot_longer(cols=c(Palmitic,Oleic,Linoleic),
+               names_to="mascobnaKislina",
+               values_to="koncentracija")
+```
+
+## Analiza
+
+### Naloga 1
+
+Želel sem pručiti, kako so porazdeljene koncentacije maščobnih kislin. Porazdelitev je najlažje prikazati s histogramom, saj je možno prepoznati odstopajoče vrednosti in nenavadne zančilnosti. Za lažjo prepoznavo je vsaka maščobna kislina prikazana na svojem histogramu.
+
+```{r}
+ggplot(dataLong1,aes(x=koncentracija)) +
+  geom_histogram(position="identity",alpha=0.6,bins=30) +
+  facet_wrap(~mascobnaKislina,scales="free") +
+  labs(title="Distribucija maščobnih kislin",
+       x="Koncentracija",
+       y="Frekvenca")
+```
+
+Iz histograma za palmitinsko kislino je razvidno, da porazdelitev ni normalna, saj kljub temu, da bi mediana lahko bila pribljižno enaka povprečju, večina vzorcev ni koncentriranih okoli nje.
+
+Edina maščobna kislina, ki je pribljižno normalno porazdeljena, bi lahko bila stearična kislina.
+
+### Naloga 2
+
+Da bi preveril, kako se koncentracije izbranih maščobnih kislin razlikujejo po posameznih regijah, sem izračunal kvartile po regijah za vsako od kislin. To se lahko vizualno prikaže z okvirjem z ročaji. 
+
+```{r}
+dataLong2 |>
+  group_by(Label,mascobnaKislina) |>
+  summarise(Q1=quantile(koncentracija,.25),
+            Median=median(koncentracija),
+            Q3=quantile(koncentracija,.75)) |>
+  as_tibble() |>
+  datatable(,options=list(pageLenght=10))
+```
+
+Iz tabele je razvidno, da se vrednosti izbranih maščobnih kislin zelo razlikujejo po regijah in med sabo v posameznih regijah. Oleinske kisline je v vseh regijah največ, sledi ji palmitinska kislina, najmanj pa je linoleične kisline.
+
+
+```{r}
+dataLong2 |>
+  ggplot(aes(x=Label,y=koncentracija)) +
+  geom_boxplot() +
+  facet_wrap(~mascobnaKislina,scales="free") +
+  labs(x="Regija",
+       y="Koncentracija") +
+  theme(axis.text.x=element_text(angle=45,hjust=1))
+```
+
+Iz grafov je so raznidne razlike, ki med regijami, moramo pa paziti, da pravilno preberemo skale na y-osi, saj se skala za oleinsko kislino začne precej višje (pri 6500), med tem ko se drugi dve kislini konča pri 1500 in 1800.
+
+### Naloga 3
+
+Ali obstaja linearna povezava med dvema maščobnima kislinama, v primeru domače naloge sta to palmitinska in oleinska kislina, preverimo s Pearsonovim korelacijskim koeficientom, ki meri moč in smer linearne povezave.
+
+```{r}
+ggscatter(data,x="Palmitic",y="Oleic",
+         add="reg.line",
+         conf.int=T,
+         cor.coef=T,
+         cor.method="pearson")
+```
+
+``` {r}
+corResult <- cor(data$Palmitic,data$Oleic)
+print(paste("Pearsonov korelacijski koeficient:",corResult))
+```
+
+Iz grafa je razvidno, da sta kislini linearno povezani, namreč več kot je oleinske kisline, manj je palmitinske.
+
+### Naloga 4
+
+Ali so maščobne kisline normalno porazdeljene je s histogrami prikazano v prvi nalogi, sedaj pa je potrebno še preveriti. Z uporabo Q-Q grafikonov in trendne črte se preverja skladnost empiričnih kvatilov s teoretičnimi kvantili normalne porazdelitve.
+
+```{r}
+par(mfrow=c(3,3),mar=c(4,4,3,1))
+
+mascobneKisline<-names(data[c(5:12)])
+
+for (mascobnaKislina in mascobneKisline) {
+  qqnorm(data[[mascobnaKislina]],
+         x=mascobnaKislina)
+  qqline(data[[mascobnaKislina]],
+         col="red",
+         lwd=2)
+}
+```
+
+Nobena od maščobnih kislin ni porazdeljena normalno.
+
+### Naloga 5
+
+Preučim lahko tudi ali obstajajo statistično značilne razlike v koncentraciji posameznih kislin glede na različne regije. Za to analizo sem uporabil analizo variance (ANOVA) za preverjanje razik med povprečji regij.
+
+```{r}
+anova_result <- aov(Linolenic~Label,data=data)
+summary(anova_result)
+```
+
+Rezultati analize variance kažejo, da je koncentracija linoleične kisline po posameznih regijah statistično značilna.

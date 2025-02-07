@@ -1,0 +1,93 @@
+---
+title: "Kviz 3"
+author: "Miha Prajs"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+    code-fold: show
+execute: 
+  warning: false
+  error: true
+  echo: true
+language: "C:/Users/mihap/Code/Faks/famnit24-statistika/HW/DomacaNaloga/_language-sl.yml"
+---
+
+## Priprava podatkov
+
+```{r}
+library(tidyverse)
+
+my.data <- read.table("C:/Users/mihap/Code/Faks/famnit24-statistika/HW/Kvizi/Kviz3/data.txt", 
+                      header=TRUE, 
+                      stringsAsFactors=TRUE, sep="",
+                      na.strings="NA",
+                      dec=".",
+                      strip.white=TRUE)
+x <- 4
+z <- 6
+my.data <- my.data[unique(c(seq(x,
+                                nrow(my.data)
+                                ,by=10),
+                            seq(z,
+                                nrow(my.data)
+                                ,by=10))),]
+```
+
+## 1. naloga
+**H0:** Povprečna številka čevlja je enaka za moške in ženske.
+
+**H1:** Povprečna številka čevlja se razlikuje med moškimi in ženskami.
+
+```{r}
+t.test(my.data$Shoe.size~my.data$Sex,var.equal=T,conf.level=0.99)
+```
+
+**Statistični sklep:** Številka čevlja študentk se statistčno značilno razlikuje od številke čevlja študentov.
+
+## 2. naloga
+
+Na spodnjem grafu so predstavljeni podatki o številki čevlja v odvisnosti od teže.
+
+```{r}
+ggplot(my.data,aes(x=Weight,y=Shoe.size)) +
+  geom_point() +
+  geom_smooth(method="lm",col="blue")
+
+```
+
+Iz grafa lahko opazimo, da sta teža in številka čevlja med seboj povezani. To nam zelo dobro prikaže modra trendna črta.
+
+```{r}
+summary(lm(Shoe.size~Weight,data=my.data))
+```
+
+Funkcija lm nam prikaže še s številkami pove, da sta spremenljivki povezani, saj je stopnja značilnosti manjša od 0,001.
+
+## 3. naloga
+
+**H0:** Teža in ure športa na teden nista monotono povezani.
+
+**H1:** Teža in ure športa na teden sta monotono povezani.
+
+```{r}
+cor.test(my.data$Weight,my.data$Sport..hours.per.week.,method="spearman")
+```
+
+Ker je *p*-vrednost večja od 0,05, podatki ne kažejo statistično značilne monotone povezanosti.
+
+## 4. naloga
+
+**H0:** Zastopanost domačih ljubljenčkov ustreza dani porazdelitvi.
+
+**H1:** Zastopanost domačih ljubljenčkov se razlikuje od dane porazdelitve.
+
+```{r}
+pets <- c("PetCat","PetDog","PetFish","PetOther")
+observed <- colSums(my.data[pets]=="Yes")
+expected <- c(0.41,0.33,0.10,0.16)*sum(observed)
+
+chisq.test(observed,p=expected,rescale.p=T)
+```
+
+Ker je *p*-vrednost večja od α, ne moremo zavrniti ničelne hipoteze. Domačih ljubljenčkov v populciji študentov torej ustreza podani porazdelitvi.
